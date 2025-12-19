@@ -39,24 +39,28 @@ const PollsCreate = () => {
 
   return (
     <div className='p-5 mx-auto w-2/5'>
-      <h1>Polls Details</h1>
+      <h1 className='text-xl font-bold text-center'>Polls Details</h1>
       <form onSubmit={handleSubmit}>
-        <div>
-          <h4>Polls Title</h4>
-          <input type='text' value={question} onChange={(e) => setQuestion(e.target.value)} placeholder='Enter the polls tittle..' />
+        <div className='py-1'>
+         <label className="block text-lg font-semibold text-gray-700 mb-2">Poll Title</label>
+          <input type='text' value={question} className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition shadow-sm" onChange={(e) => setQuestion(e.target.value)} placeholder='Enter the polls tittle..' />
         </div>
-        <div>
-          <div className='flex justify-between'>
-            <input type='text' value={option1} onChange={(e) => setOption1(e.target.value)} placeholder='Enter the polls options..' />
-            <input type='text' value={option2} onChange={(e) => setOption2(e.target.value)} placeholder='Enter the polls options..' />
+        <div className='pt-2'>
+          <label className="block text-lg font-semibold text-gray-700 mb-3">Options</label>
+          <div className='py-1'>
+
+          <div className="grid py-2 grid-cols-1 md:grid-cols-2 gap-4">
+            <input type='text' value={option1} className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-400 outline-none transition" onChange={(e) => setOption1(e.target.value)} placeholder='Enter the polls options..' />
+            <input type='text' value={option2} className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-400 outline-none transition" onChange={(e) => setOption2(e.target.value)} placeholder='Enter the polls options..' />
           </div>
-          <div>
-            <input type='text' value={option3} onChange={(e) => setOption3(e.target.value)} placeholder='Enter the polls options..' />
-            <input type='text' value={option4} onChange={(e) => setOption4(e.target.value)} placeholder='Enter the polls options..' />
+          <div className="grid py-2 grid-cols-1 md:grid-cols-2 gap-4">
+            <input type='text' value={option3} className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-400 outline-none transition" onChange={(e) => setOption3(e.target.value)} placeholder='Enter the polls options..' />
+            <input type='text' value={option4} className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-400 outline-none transition" onChange={(e) => setOption4(e.target.value)} placeholder='Enter the polls options..' />
+          </div>
           </div>
         </div>
-        <div>
-          <button type='submit' >Submit Polls</button>
+        <div className='py-2'>
+          <button type='submit'  className="bg-blue-600 text-center hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg font-semibold transition-all shadow-md w-full" >Submit Polls</button>
         </div>
       </form>
     </div>
