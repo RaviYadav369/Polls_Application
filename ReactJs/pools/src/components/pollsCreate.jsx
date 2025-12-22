@@ -19,10 +19,10 @@ const PollsCreate = () => {
       option3name: option3,
       option4name: option4,
     }
-
+    console.log("polls data",pollData)
     try {
-      const data = await axios.post('http://localhost:8000', pollData)
-      
+      const data = await axios.post('http://127.0.0.1:8000/', pollData)
+      console.log(data.data)
         alert('Polls created Succcessfully')
       
     } catch (error) {
@@ -40,7 +40,7 @@ const PollsCreate = () => {
   return (
     <div className='p-5 mx-auto w-2/5'>
       <h1 className='text-xl font-bold text-center'>Polls Details</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={(e)=>handleSubmit(e)}>
         <div className='py-1'>
          <label className="block text-lg font-semibold text-gray-700 mb-2">Poll Title</label>
           <input type='text' value={question} className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition shadow-sm" onChange={(e) => setQuestion(e.target.value)} placeholder='Enter the polls tittle..' />

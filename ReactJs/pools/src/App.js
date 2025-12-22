@@ -19,7 +19,7 @@ function App() {
           <Route path="/" element={<Navigate to="/polling" />} />
           <Route path='/pollcreate' element={<PollsCreate />} />
           <Route path='/polling' element={<Polling />} />
-          <Route path='/pollsresult' element={<PollsResult />} />
+          <Route path='/pollsresult/:id' element={<PollsResult />} />
         </Routes>
       </BrowserRouter>
     </>

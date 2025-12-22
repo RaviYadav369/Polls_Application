@@ -4,43 +4,48 @@ import { useNavigate } from 'react-router-dom'
 
 const Polling = () => {
 
-const [polldata, setPollData]= useState([])
-const [isVoteId,setIsVoteId] = useState()
-const [isVote,setIsVote] = useState(false)
-const navigate = useNavigate()
+  const [polldata, setPollData] = useState([])
+  const [isVoteId, setIsVoteId] = useState()
+  const [isVote, setIsVote] = useState(false)
+  const navigate = useNavigate()
+  
 
-const handleIsVote = (id)=>{
+  const handleIsVote = (id) => {
     setIsVoteId(id)
-   
-    polldata.forEach((poll)=>{
-      if(poll._id === id){
+
+    polldata.forEach((poll) => {
+      if (poll._id === id) {
         setIsVote(true)
       }
     })
-     if(isVoteId === id && isVote){
+    if (isVoteId === id && isVote) {
       setIsVote(false)
     }
-}
-const handleVoteOption=async(id,option)=>{
-const result = await axios.patch(`https://polls-application-gold.vercel.app/${id}`,{option:option})
-  alert("You have vote for the Pole")
-}
+  }
+  const handleVoteOption = async (id, option) => {
+    console.log(id,option)
+    const result = await axios.put(`http://127.0.0.1:8000/polls/${id}`, { option: option })
+    console.log(result.data)
+    alert("You have vote for the Pole")
+  }
 
-
-
-  useEffect(()=>{
-   async function fetchData(){
-    const result = await axios.get('https://polls-application-gold.vercel.app/')
-    if(result){
-      setPollData(result.data)
-    }
+   function fetchPollResult(id){
+    navigate(`/pollsresult/${id}`)
+  
    } 
 
-   fetchData()
-  },[])
-  
+  useEffect(() => {
+    async function fetchData() {
+      const result = await axios.get('http://127.0.0.1:8000/')
+      if (result) {
+        setPollData(result.data)
+      }
+    }
+
+    fetchData()
+  }, [])
   return (
-  
+
     <div className="min-h-screen bg-gray-50 py-12 px-4 no-scrollbar overflow-y-auto">
       <div className="max-w-4xl mx-auto">
         {/* Header Section */}
@@ -49,7 +54,7 @@ const result = await axios.patch(`https://polls-application-gold.vercel.app/${id
             <h1 className="text-3xl font-bold text-slate-800">Active Polls</h1>
             <p className="text-slate-500">Select a poll to participate or view live standings.</p>
           </div>
-          <button onClick={()=>navigate('/pollcreate')} className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg font-semibold transition-all shadow-md flex items-center gap-2">
+          <button onClick={() => navigate('/pollcreate')} className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg font-semibold transition-all shadow-md flex items-center gap-2">
             <span className="text-xl">+</span> Create New Poll
           </button>
         </div>
@@ -57,8 +62,8 @@ const result = await axios.patch(`https://polls-application-gold.vercel.app/${id
         {/* Polls Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 no-scrollbar overflow-y-auto">
           {polldata.map((poll) => (
-            <div 
-              key={poll._id} 
+            <div
+              key={poll._id}
               className="bg-white border border-slate-200 rounded-xl p-6 hover:shadow-xl transition-shadow duration-300 flex flex-col justify-around"
             >
               <div>
@@ -72,36 +77,36 @@ const result = await axios.patch(`https://polls-application-gold.vercel.app/${id
                   {poll.pollsTitle}
                 </h3>
               </div>
-              { isVoteId ? !(poll._id === isVoteId) && isVote && (
+              {isVoteId ? !(poll._id === isVoteId) && isVote && (
                 <p>
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis molestias voluptatibus optio veritatis itaque eveniet ex, iure maxime sint, dolor placeat dolorem at nemo. Omnis ea, voluptatum eveniet tempora explicabo maiores minima quos quia sapiente provident corporis eligendi nesciunt numquam repellendus vero veritatis eum dolore.
                 </p>
-              ):
-               <p>
+              ) :
+                <p>
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis molestias voluptatibus optio veritatis itaque eveniet ex, iure maxime sint, dolor placeat dolorem at nemo. Omnis ea, voluptatum eveniet tempora explicabo maiores minima quos quia sapiente provident corporis eligendi nesciunt numquam repellendus vero veritatis eum dolore.
                 </p>
               }
               <div className="flex gap-3">
-                <button  className="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2 rounded-lg transition-colors">
+                <button onClick={()=>fetchPollResult(poll._id)} className="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2 rounded-lg transition-colors">
                   View Results
                 </button>
-                <button onClick={()=>handleIsVote(poll._id)} className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-lg transition-colors">
+                <button onClick={() => handleIsVote(poll._id)} className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-lg transition-colors">
                   Vote Now
                 </button>
               </div>
               {(poll._id === isVoteId) && isVote && (
                 <div className='p-3'>
                   <div className='py-1'>
-                    <button className=" w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-lg transition-colors" onClick={()=>handleVoteOption(polldata._id,'option1')}>{poll.option1name}</button>
+                    <button className=" w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-lg transition-colors" onClick={() => handleVoteOption(poll._id, 'option1name')}>{poll.option1name}</button>
                   </div>
-                  <div  className='py-1'>
-                    <button className=" w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-lg transition-colors" onClick={()=>handleVoteOption(polldata._id,'option2')}>{poll.option2name}</button>
+                  <div className='py-1'>
+                    <button className=" w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-lg transition-colors" onClick={() => handleVoteOption(poll._id, 'option2name')}>{poll.option2name}</button>
                   </div>
-                  <div  className='py-1'>
-                    <button className=" w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-lg transition-colors" onClick={()=>handleVoteOption(polldata._id,'option3')}>{poll.option3name}</button>
+                  <div className='py-1'>
+                    <button className=" w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-lg transition-colors" onClick={() => handleVoteOption(poll._id, 'option3name')}>{poll.option3name}</button>
                   </div>
-                  <div  className='py-1'>
-                    <button className=" w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-lg transition-colors" onClick={()=>handleVoteOption(polldata._id,'option4')}>{poll.option4name}</button>
+                  <div className='py-1'>
+                    <button className=" w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-lg transition-colors" onClick={() => handleVoteOption(poll._id, 'option4name')}>{poll.option4name}</button>
                   </div>
                 </div>
               )}
@@ -117,7 +122,7 @@ const result = await axios.patch(`https://polls-application-gold.vercel.app/${id
         )}
       </div>
     </div>
-   
+
   )
 }
 
