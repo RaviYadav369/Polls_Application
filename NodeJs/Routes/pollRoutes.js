@@ -2,16 +2,26 @@ import express from 'express'
 import Poll from '../database/polls_schema.js'
 const PoolsRoute = express.Router()
 
-PoolsRoute.get('/',async(req,res)=>{
+
+PoolsRoute.get('/analytic/:id',async(req,res)=>{
     try {
-        const data = await Poll.find({})
+        let data ={}
+        if(req.params.id){
+            
+             data = await Poll.findById(req.params.id)
+        }
+        else{
+            const newValue = await Poll.find({})
+            data = newValue[0]
+        }
+
         if(!data){
             res.status(400).send({message: "NO Pools data"})
         }
-    
         res.status(200).send(data)
         
     } catch (error) {
+        console.log(error)
         res.status(400).send({error:error})
     }
 })
@@ -82,5 +92,20 @@ PoolsRoute.put('/polls/:id',async(req,res)=>{
      res.status(400).send({error:error})   
     }
 })
+
+PoolsRoute.get('/',async(req,res)=>{
+    try {
+        const data = await Poll.find({})
+        if(!data){
+            res.status(400).send({message: "NO Pools data"})
+        }
+    
+        res.status(200).send(data)
+        
+    } catch (error) {
+        res.status(400).send({error:error})
+    }
+})
+
 
 export default PoolsRoute;
