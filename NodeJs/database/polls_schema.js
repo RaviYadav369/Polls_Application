@@ -6,14 +6,14 @@ const PollsSchema = new mongoose.Schema({
     option2name :String,
     option3name :String,
     option4name :String,
-    option1vote:Number,
-    option2vote:Number,
-    option3vote:Number,
-    option4vote:Number,
-    option1percentage:Number,
-    option2percentage:Number,
-    option3percentage:Number,
-    option4percentage:Number,
+    option1vote:{type:number, default:0},
+    option2vote:{type:number, default:0},
+    option3vote:{type:number, default:0},
+    option4vote:{type:number, default:0},
+    option1percentage:{type:number, default:0},
+    option2percentage:{type:number, default:0},
+    option3percentage:{type:number, default:0},
+    option4percentage:{type:number, default:0},
 })
 
 const Poll = mongoose.model('Poll',PollsSchema);

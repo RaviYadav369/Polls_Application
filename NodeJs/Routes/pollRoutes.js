@@ -48,14 +48,15 @@ PoolsRoute.post('/',async(req,res)=>{
 })
 
 
-PoolsRoute.patch('/Pools/:id',async(req,res)=>{
+PoolsRoute.put('/polls/:id',async(req,res)=>{
     try {
         const {option} = req.body;
+        console.log(req.params.id,option)
         let dict = {
-            "option1name":1,
-            "option2name":2,
-            "option3name":3,
-            "option4name":4,
+            option1name:1,
+            option2name:2,
+            option3name:3,
+            option4name:4,
         }
 
         const pollData = await Poll.findById(req.params.id)
