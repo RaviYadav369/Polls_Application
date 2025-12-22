@@ -16,6 +16,6 @@ const PollsSchema = new mongoose.Schema({
     option4percentage:Number,
 })
 
-const Polls = mongoose.model('Polls',PollsSchema);
+const Poll = mongoose.model('Poll',PollsSchema);
 
-export default Polls;
+export default Poll;

@@ -7,6 +7,11 @@ const app = express()
 
 connectDB()
 app.use(cors({ origin: '*' }));
+// Example: Serving frontend from Express
+app.use(express.static('client/build'));
+app.use(express.json());
+
+
 app.use('/',pollsRoute)
 
 app.listen(8000,()=>{

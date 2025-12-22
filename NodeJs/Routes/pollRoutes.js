@@ -1,10 +1,10 @@
 import express from 'express'
-import Polls from '../database/polls_schema.js'
+import Poll from '../database/polls_schema.js'
 const PoolsRoute = express.Router()
 
 PoolsRoute.get('/',async(req,res)=>{
     try {
-        const data = await Polls.find({})
+        const data = await Poll.find({})
         if(!data){
             res.status(400).send({message: "NO Pools data"})
         }
@@ -17,41 +17,36 @@ PoolsRoute.get('/',async(req,res)=>{
 })
 
 function validate(validString){
-    if(validString.length >0 ||  !isNaN(validString)){
-        return true
+    if (validString && validString.toString().trim().length > 0) {
+        return true;
     }
-
-    return false
+    return false;
 }
 
 PoolsRoute.post('/',async(req,res)=>{
     try {
-        console.log('post')
-        const {title,option1,option2,option3,option4} = req.body;
+        console.log('post',req.body)
+        const {pollsTitle,option1name,option2name,option3name,option4name} = req.body
         let data ={}
-        console.log(title,option1,option2,option3,option4)
-        if(validate(title) && validate(option1) && validate(option2) && validate(option3) && validate(option4)){
+        console.log(pollsTitle,option1name,option2name,option3name,option4name)
+        if(validate(pollsTitle) && validate(option1name) && validate(option2name) && validate(option3name) && validate(option4name)){
             data={
-                PoolsTitle:title,
-                option1name :option1,
-                option2name :option2,
-                option3name :option3,
-                option4name :option4,
+                pollsTitle,
+                option1name ,
+                option2name ,
+                option3name ,
+                option4name ,
             }
         }
 
-       const poll =  await Polls.create({
-        pollsTitle,
-        option1name,
-        option2name,
-        option3name,
-        option4name
-       })
-        req.status(200).send({message:"Pools Created Successful "})
+       const poll =  await Poll.create(data)
+        res.status(200).send({message:"Pools Created Successful "})
     } catch (error) {
+        console.log(error)
         res.status(400).send({error:error})
     }
 })
+
 
 PoolsRoute.patch('/Pools/:id',async(req,res)=>{
     try {
@@ -63,7 +58,7 @@ PoolsRoute.patch('/Pools/:id',async(req,res)=>{
             "option4name":4,
         }
 
-        const pollData = await Polls.findById(req.params.id)
+        const pollData = await Poll.findById(req.params.id)
         if(!pollData){
             res.status(400).send({message:"NO pollData Found"})
         }
