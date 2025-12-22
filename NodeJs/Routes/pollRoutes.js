@@ -40,7 +40,13 @@ PoolsRoute.post('/',async(req,res)=>{
             }
         }
 
-       const poll =  await Polls.create(data)
+       const poll =  await Polls.create({
+        pollsTitle,
+        option1name,
+        option2name,
+        option3name,
+        option4name
+       })
         req.status(200).send({message:"Pools Created Successful "})
     } catch (error) {
         res.status(400).send({error:error})
