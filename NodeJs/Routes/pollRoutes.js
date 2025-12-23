@@ -6,14 +6,31 @@ const PoolsRoute = express.Router()
 PoolsRoute.get('/analytic/:id',async(req,res)=>{
     try {
         let data ={}
-        if(req.params.id){
+        if(req.params.id === 'undefine'){
             
-             data = await Poll.findById(req.params.id)
-        }
-        else{
             const newValue = await Poll.find({})
             data = newValue[0]
         }
+        else{
+            data = await Poll.findById(req.params.id)
+        }
+
+        if(!data){
+            res.status(400).send({message: "NO Pools data"})
+        }
+        res.status(200).send(data)
+        
+    } catch (error) {
+        console.log(error)
+        res.status(400).send({error:error})
+    }
+})
+PoolsRoute.get('/analytic',async(req,res)=>{
+    try {
+        let data ={}
+            const newValue = await Poll.find({})
+            data = newValue[0]
+       
 
         if(!data){
             res.status(400).send({message: "NO Pools data"})
