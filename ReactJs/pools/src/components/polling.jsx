@@ -23,9 +23,7 @@ const Polling = () => {
     }
   }
   const handleVoteOption = async (id, option) => {
-    console.log(id,option)
-    const result = await axios.put(`${process.env.Backend_Url}/${id}`, { option: option })
-    console.log(result.data)
+    const result = await axios.put(`${process.env.REACT_APP_Backend_Url}polls/${id}`, { option: option })
     alert("You have vote for the Pole")
   }
 
@@ -33,10 +31,9 @@ const Polling = () => {
     navigate(`/pollsresult/${id}`)
   
    } 
-
   useEffect(() => {
     async function fetchData() {
-      const result = await axios.get('http://127.0.0.1:8000/')
+      const result = await axios.get(`${process.env.REACT_APP_Backend_Url}`)
       if (result) {
         setPollData(result.data)
       }
