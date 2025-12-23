@@ -35,10 +35,8 @@ function validate(validString){
 
 PoolsRoute.post('/',async(req,res)=>{
     try {
-        console.log('post',req.body)
         const {pollsTitle,option1name,option2name,option3name,option4name} = req.body
         let data ={}
-        console.log(pollsTitle,option1name,option2name,option3name,option4name)
         if(validate(pollsTitle) && validate(option1name) && validate(option2name) && validate(option3name) && validate(option4name)){
             data={
                 pollsTitle,
@@ -61,7 +59,6 @@ PoolsRoute.post('/',async(req,res)=>{
 PoolsRoute.put('/polls/:id',async(req,res)=>{
     try {
         const {option} = req.body;
-        console.log(req.params.id,option)
         let dict = {
             option1name:1,
             option2name:2,
