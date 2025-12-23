@@ -24,7 +24,7 @@ const Polling = () => {
   }
   const handleVoteOption = async (id, option) => {
     console.log(id,option)
-    const result = await axios.put(`http://127.0.0.1:8000/polls/${id}`, { option: option })
+    const result = await axios.put(`${process.env.Backend_Url}/${id}`, { option: option })
     console.log(result.data)
     alert("You have vote for the Pole")
   }

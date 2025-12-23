@@ -21,7 +21,7 @@ const PollsCreate = () => {
     }
     console.log("polls data",pollData)
     try {
-      const data = await axios.post('http://127.0.0.1:8000/', pollData)
+      const data = await axios.post(`${process.env.Backend_Url}`, pollData)
       console.log(data.data)
         alert('Polls created Succcessfully')
       

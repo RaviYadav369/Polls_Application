@@ -10,7 +10,7 @@ const navigate = useNavigate()
   useEffect(() => {
     async function fetchData() {
       try {
-        const result = await axios.get(`http://127.0.0.1:8000/analytic/${id}`);
+        const result = await axios.get(`${process.env.Backend_Url}/${id}`);
         setPollData(result.data);
       } catch (err) {
         console.error("Fetch failed", err);
