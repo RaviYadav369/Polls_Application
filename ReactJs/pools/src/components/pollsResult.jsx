@@ -9,8 +9,14 @@ const navigate = useNavigate()
 
   useEffect(() => {
     async function fetchData() {
+      let result = {}
       try {
-        const result = await axios.get(`${process.env.REACT_APP_Backend_Url}analytic/${id}`);
+        if(typeof id === 'undefined'){
+             result = await axios.get(`${process.env.REACT_APP_Backend_Url}analytic`);
+        }
+        else{
+           result = await axios.get(`${process.env.REACT_APP_Backend_Url}analytic/${id}`);
+        }
         setPollData(result.data);
       } catch (err) {
         console.error("Fetch failed", err);
